@@ -177,20 +177,19 @@ app.delete('/books/:book_id', function (req, res){
 
 /* get, delete, post, borrow  */
 
-app.get('/borrows', function (req, res) {
-	Borrow.find( function (err, borrows) {
+app.get('/borrows', function (req, res){
+	Borrow.find({}, function (err, borrows) {
 		if (err) {
-			console.log(err);
-			res.send(err);
+			console.log('there is no borrows');
+			res.send('there is no borrows');
 		} else {
-			console.log(borrows);
-			res.render('borrow', {
+			console.log('borrows: ', borrows);
+			res.render('borrows', {
 				borrow: borrows
 			});
 		}
 	});
 });
-
 
 app.get('/books/:book_id/borrows', function (req, res) {
 	console.log('get borrows');
@@ -201,7 +200,7 @@ app.get('/books/:book_id/borrows', function (req, res) {
 			res.send(err);
 		} else {
 			console.log('borrows: ', borrows, req.params.book_id);
-			res.render('borrows', {
+			res.render('borrow', {
 				borrow: borrows,
 				book_id : req.params.book_id
 			});
@@ -248,35 +247,38 @@ app.post('/books/:book_id', function(req, res){
 
 });
 
-app.delete('/books/:book_id/borrows/:borrow_id', function(req, res){
+app.delete('books/:book_id/borrows/:borrow_id', function(req, res){
 	console.log('delete borrow');
 	var am;
-
-	Book.findOne({ _id : req.params.book_id }, function (err, book) {
+	
+	Book.findOne({ _id : req.params.book_id}, function (err, book) {
 		if (err) {
-			console.log(err);
+			res.send(err);
 		} else {
-			console.log('book: ', book);
-			console.log('am: ', am);
-			am = book.amount + 1;
-			Borrow.findOneAndRemove({ _id : req.params.borrow_id, book_id : req.params.book_id }, function(err, borrow) {
+			am = book.amount + 1;	
+			
+			Borrow.findOneAndRemove({ _id : req.params.borrow_id}, function(err, borrow){
 				if (err) {
 					console.log('borrow delete err: ', err);
 					res.send(err);
 				} else {
 					console.log('success delete borrow');
 					res.send('success delete borrow');
-					Book.findOneAndUpdate({ _id : req.params.book_id }, { amount : am}, { new : true }, function (err, book) {
+					
+					Book.findOneAndUpdate( {_id : req.params.book_id }, { amount : am}, { new : true },  function(err, book){
 						if (err) {
-							console.log(err);
+							console.log('book updated err: ', err);
+							res.send('book updated err: ', err);
 						} else {
-								console.log(book);
+							console.log('book updated');
+							res.send(book);
 						}
 					});
 				}
 			});
-		 }
-	});	
+		}
+	});
+	
 });
 
 var server = app.listen(3000, function () {

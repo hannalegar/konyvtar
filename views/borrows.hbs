@@ -1,6 +1,11 @@
-{{#each borrow}}
-	<h3>ISBN: {{ISBN}}</h3>
-	<p>user: {{user}}</p>
-	<p>date: {{date}}</p>
-	<a id="delete-borrow" href="http://localhost:3000/books/{{book_id}}/borrows/{{_id}}">delete</a>
-{{/each}}
+<section id="borrows">
+	{{#each borrow}}
+		<div class="borrow">
+			<h3>ISBN: {{ISBN}}</h3>
+			<p>user: {{user}}</p>
+			<p>date: {{date}}</p>
+			<p>_id: {{_id}}</p>
+			<a class="delete-borrow" href="http://localhost:3000/books/{{book_id}}/borrows/{{_id}}">delete</a>
+		</div>
+	{{/each}}
+</section>

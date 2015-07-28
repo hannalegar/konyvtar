@@ -1,7 +1,8 @@
 <h3>title: {{book.title}}</h3>
 <p>ISBN: {{book.ISBN}}</p>
 <p>author: {{book.author}}</p>
-<p>amount: {{book.amount}}</p>
+<p id="am">amount: {{book.amount}}</p>
 
 <a id="delete-book" href="http://localhost:3000/books/{{book._id}}">Delete</a>
 <a id="borrow-book" href="http://localhost:3000/books/{{book._id}}">Borrow</a>
+<a href="http://localhost:3000/books/{{book._id}}/borrows" >Borrows</a>
