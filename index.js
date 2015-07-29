@@ -1,10 +1,11 @@
-var express = require('express');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var cookieParser = require('cookie-parser');
-var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var express = require('express');
+var exphbs = require('express-handlebars');
+var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
+var passport = require('passport');
+
 var app = express();
 
 app.use(express.static('public'));
@@ -40,6 +41,15 @@ passport.deserializeUser(Account.deserializeUser(function(id, done){
 
 mongoose.connect('mongodb://user:password@ds051740.mongolab.com:51740/konyvtar');
 
+var requiresAdmin = function(req, res, next) {	
+	if (req.user && req.user.isAdmin === true) {
+		next();
+	} else {
+		console.log('Unauthorized');
+		res.send(401, 'Unauthorized');
+	}		
+};
+
 /*
 registration
 login
@@ -59,20 +69,22 @@ delete borrow --> edit book
 
 /* registration, login, logout */
 
-app.get('/register', function(req, res){
+app.get('/register', requiresAdmin, function(req, res){
 	console.log('get.register');
-	res.render('register', {});
+	res.render('register');
 });
 
-app.post('/register', function(req, res){
-	Account.register( new Account ({ username : req.body.username}), req.body.password, function(err, account){
+app.post('/register', requiresAdmin, function(req, res){
+	Account.register( new Account ({ username : req.body.username, isAdmin : req.body.isAdmin}), req.body.password, function(err, account){
 		if (err) {
 			console.log(err);
-			return res.render('register', { account : account});
+			//return res.render('register', { account : account});
+			res.send(err);
 		} else {
-			passport.authenticate('local')(req, res, function(){
+			(req, res, function(){
 				console.log('succes registration', account);
-				res.redirect('/')
+				//res.redirect('/')
+				res.send(account);
 			});
 		}
 	});
@@ -129,7 +141,7 @@ app.get('/books/:book_id', function (req, res) {
 	});
 });
 
-app.post('/books', function(req, res){
+app.post('/books', requiresAdmin, function(req, res){
 
 	var data = {
 		ISBN: req.body.ISBN,
@@ -163,7 +175,7 @@ app.post('/books', function(req, res){
 	});
 });
 
-app.delete('/books/:book_id', function (req, res){
+app.delete('/books/:book_id', requiresAdmin, function (req, res){
 	Book.findOneAndRemove({ _id: req.params.book_id}, function (err, book){
 		if (err) {
 			console.log('Nincs ilyen könyv');

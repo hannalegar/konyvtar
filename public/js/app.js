@@ -41,6 +41,7 @@ $('#delete-book').click(function (e) {
 		dataType: 'json',
 		complete: function(){
 			console.log('deleted');
+			 $(this).parent().remove();
 			window.location.replace("http://localhost:3000");
 		}
 	});
@@ -71,4 +72,30 @@ $('.borrow').on('click', '.delete-borrow', function (e) {
 			$(this).parent().remove();
 		}
 	});
+});
+
+$('#register').submit(function (e) {
+	e.preventDefault();
+	console.log(this, this.action);
+	console.log('username: ', $('#username').val());
+	console.log('password: ', $('#ps').val());
+	console.log('isAdmin: ', $('#isAdmin')[0].checked);
+	
+	$.post(this.action, {
+		username: $('#username').val(),
+		password: $('#ps').val(),
+		isAdmin: $('#isAdmin')[0].checked
+	}, function (data) {
+		if (!data._id) {
+			if (data.message) {
+				$('#invalid-username').text(data.message).show().fadeOut(3000);
+			}
+			if (!data.password) {
+				$('#invalid-ps').text('Field password is not set!').show().fadeOut(3000);
+			}
+		} else {
+			console.log('success');
+			window.location.replace("http://localhost:3000/login");
+		}
+	}, 'JSON');
 });

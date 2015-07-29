@@ -1,8 +1,12 @@
-{{#each book}}
-	<a href="http://localhost:3000/books/{{_id}}">
-		<h3>title: {{title}}</h3>
-	</a>
-	<p>ISBN: {{ISBN}}</p>
-	<p>author: {{author}}</p>
-	<p>amount: {{amount}}</p>
-{{/each}}
+<section id="books">
+	{{#each book}}
+		<div class="book">
+			<a href="http://localhost:3000/books/{{_id}}">
+				<h3>title: {{title}}</h3>
+			</a>
+			<p>ISBN: {{ISBN}}</p>
+			<p>author: {{author}}</p>
+			<p>amount: {{amount}}</p>
+			</div>
+	{{/each}}
+</section>

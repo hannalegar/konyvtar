@@ -1,5 +1,8 @@
-<form action="/register" method="post">
-	<p>username</p><input type="text" name="username">
-	<p>password</p><input type="password" name="password">
+<form action="/register" method="post" id="register">
+	<p>username</p><input type="text" name="username" id="username">
+		<p id="invalid-username" class="invalid"></p>
+	<p>password</p><input type="password" name="password" id="ps">
+		<p id="invalid-ps" class="invalid"></p>
+		<p>Admin</p><input type="checkbox" name="isAdmin" id="isAdmin">
 	<input type="submit" value="submit" name="submit">
 </form>
