@@ -5,6 +5,17 @@ var exphbs = require('express-handlebars');
 var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var passport = require('passport');
+var multer = require('multer');
+
+var upload = multer({ storage : multer.diskStorage ({
+		destination: function (req, file, cb) {
+			cb(null, './public/images/book/');
+		},
+		filename: function (req, file, cb){
+			cb(null, file.originalname);
+		}
+	})
+});
 
 var app = express();
 
@@ -29,17 +40,23 @@ var Account = require('./models/account');
 
 passport.use(new LocalStrategy(Account.authenticate()));
 
-passport.serializeUser(Account.serializeUser(function(user, done){
+passport.serializeUser(Account.serializeUser( function (user, done) {
 	done(null, Account._id);
 }));
 	
-passport.deserializeUser(Account.deserializeUser(function(id, done){
-	Account.findById(id, function(err, user){
+passport.deserializeUser(Account.deserializeUser( function (id, done) {
+	Account.findById( id, function (err, user) {
 		done(err, user);
-	})
+	});
 }));
 
 mongoose.connect('mongodb://user:password@ds051740.mongolab.com:51740/konyvtar');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(){
+	console.log('DB connection is up');
+});
 
 var requiresAdmin = function(req, res, next) {	
 	if (req.user && req.user.isAdmin === true) {
@@ -59,7 +76,7 @@ get books
 get book
 post book
 delete book
-(edit book)
+edit book
 
 get borrows
 get book/borrows
@@ -69,87 +86,88 @@ delete borrow --> edit book
 
 /* registration, login, logout */
 
-app.get('/register', requiresAdmin, function(req, res){
-	console.log('get.register');
-	res.render('register');
+app.get('/register', requiresAdmin, function (req, res) {
+	res.render('home');
 });
 
-app.post('/register', requiresAdmin, function(req, res){
-	Account.register( new Account ({ username : req.body.username, isAdmin : req.body.isAdmin}), req.body.password, function(err, account){
+app.post('/register', requiresAdmin, function (req, res) {
+	Account.register( new Account ({ username : req.body.username, isAdmin : req.body.isAdmin}), req.body.password, function (err, account) {
 		if (err) {
 			console.log(err);
-			//return res.render('register', { account : account});
 			res.send(err);
 		} else {
 			(req, res, function(){
 				console.log('succes registration', account);
-				//res.redirect('/')
 				res.send(account);
 			});
 		}
 	});
 });
 
-app.get('/login', function(req, res){
-	console.log('get login');
+app.get('/login', function (req, res) {
 	res.render('login', { user : req.user});
 });
 
-app.post('/login', passport.authenticate('local'), function(req, res) {
-	console.log({ user : req.user});
-	console.log('success login');
+app.post('/login', passport.authenticate('local'), function (req, res) {
 	res.redirect('/');
 });
 
-app.get('/logout', function(req, res){
-	console.log('succes logout');
+app.get('/logout', function (req, res) {
 	req.logout();
 	res.redirect('/');
 });
 
 /* get, delete, edit, add book */ 
 
-app.get('/', function(req, res){
-	res.render('new');
-});
-
-app.get('/books', function (req, res) {
+app.get('/', function (req, res) {
 	Book.find(function (err, books) {
 		if (err) {
-			console.log('failed get books', err);
 			res.send('failed get books', err);
 		} else {
-			console.log('get books', books);
 			res.render('home', {
-				book: books
-			})
-		}
-	})
-});
-
-app.get('/books/:book_id', function (req, res) {
-	Book.findOne({ _id : req.params.book_id }, function (err, book){
-		if (err) {
-			console.log('get book failed: ', err);
-			res.send('get book failed: ', err);
-		} else {
-			console.log('success get book: ', book);
-			res.render('book', {
-				book: book
+				book: books,
+				user: req.user
 			});
 		}
 	});
 });
 
-app.post('/books', requiresAdmin, function(req, res){
+app.get('/admin/book', function (req, res) {
+	Book.find(function (err, books) {
+		if (err) {
+			console.log('failed get books', err);
+		} else {
+			console.log('get books', books, req.user);
+		}
+	});
+});
+
+
+
+app.get('/books/:book_id', function (req, res) {
+	Book.findOne({ _id : req.params.book_id }, function (err, book){
+		if (err) {
+			res.send('get book failed: ', err);
+		} else {
+			res.render('book', {
+				book: book,
+				user: req.user
+			});
+		}
+	});
+});
+
+app.post('/books', requiresAdmin, upload.single('file'), function (req, res) {
 
 	var data = {
 		ISBN: req.body.ISBN,
 		title: req.body.title,
 		author: req.body.author,
-		amount: req.body.amount
+		description: req.body.description,
+		amount: req.body.amount,
+		file: req.file
 	}
-	Book.create( data, function(err, book){
+	Book.create( data, function (err, book) {
 		console.log(err);
 		var errmessage = {};
 		
@@ -163,13 +181,44 @@ app.post('/books', requiresAdmin, function(req, res){
 			if (err.errors.author) {
 				errmessage.author = err.errors.author.message;
 			}
+			if (err.errors.description) {
+				errmessage.description = err.errors.description.message;
+			}
 			if (err.errors.amount) {
 				errmessage.amount = err.errors.amount.message;
+			}
+			if (err.errors.file) {
+				errmessage.file = err.errors.file.message;
 			} 
 			res.send(errmessage);
 			console.log(errmessage);
 		} else {
-			console.log('post book', book);
+			res.send(book);
+		}
+	});
+});
+
+app.put('/books/:book_id', requiresAdmin, function (req, res) {
+	var data = {}
+	if (req.body.ISBN !== undefined) {
+		data.ISBN = req.body.ISBN;
+	}
+	if (req.body.title !== undefined) {
+		data.title = req.body.title;
+	}
+	if (req.body.author !== undefined) {
+		data.author = req.body.author;
+	}
+	if (req.body.description !== undefined) {
+		data.description = req.body.description;
+	}
+	if (req.body.amount !== undefined) {
+		data.amount = req.body.amount;
+	}
+	Book.findOneAndUpdate({ _id : req.params.book_id }, data, { new : true }, function (err, book) {
+		if (err) {
+			res.send(err);
+		} else {
 			res.send(book);
 		}
 	});
@@ -178,10 +227,8 @@ app.post('/books', requiresAdmin, function(req, res){
 app.delete('/books/:book_id', requiresAdmin, function (req, res){
 	Book.findOneAndRemove({ _id: req.params.book_id}, function (err, book){
 		if (err) {
-			console.log('Nincs ilyen könyv');
 			res.send('Nincs ilyen könyv!');
 		} else {
-			console.log('A könyv törölve lett');
 			res.send('A könyv törölve lett!');
 		}
 	});
@@ -189,106 +236,103 @@ app.delete('/books/:book_id', requiresAdmin, function (req, res){
 
 /* get, delete, post, borrow  */
 
-app.get('/borrows', function (req, res) {
+app.get('/admin/borrow', function (req, res) {
 	Borrow.find( function (err, borrows) {
 		if (err) {
 			console.log(err);
-			res.send(err);
 		} else {
 			console.log(borrows);
-			res.render('borrow', {
-				borrow: borrows
-			});
 		}
 	});
 });
 
-
-app.get('/books/:book_id/borrows', function (req, res) {
-	console.log('get borrows');
-	console.log(req.user.username, req.params.book_id);
-	Borrow.find({ book_id : req.params.book_id }, function (err, borrows) {
-		if (err) {
-			console.log('borrows err: ', err);
-			res.send(err);
-		} else {
-			console.log('borrows: ', borrows, req.params.book_id);
-			res.render('borrows', {
-				borrow: borrows,
-				book_id : req.params.book_id
-			});
-		}
-	});
-});
-
-app.post('/books/:book_id', function(req, res){
+app.post('/books/:book_id', function (req, res) {
 	console.log('post borrow');
 	
 	var am;
 	
-	Book.findOne({ _id : req.params.book_id}, function (err, book){
+	Book.findOne({ _id : req.params.book_id}, function (err, book) {
 		if (err) {
-			console.log(err);
 			res.send(err);
 		} else {
 			if (book.amount > 0) {
 				
 				Borrow.create({ ISBN : book.ISBN, user : req.user.username, book_id : req.params.book_id }, function(err, borrow){
 					if (err) {
-						console.log('borrow post error: ', err);
 						res.send(err);
 					} else {
 						am = book.amount - 1;
-						console.log('success borrow:', borrow);
 						res.send(borrow);
 						
-						Book.findOneAndUpdate( {_id : req.params.book_id }, { amount : am}, { new : true },  function(err, book){
-							if (err) {
-								console.log('book updated err: ', err);								
-							} else {
-								console.log('book updated');								
-							}
-						});
+						Book.findOneAndUpdate( {_id : req.params.book_id }, { amount : am}, { new : true },  function(err, book){});
 					}
 				});
 			} else {
-				console.log('failed borrow');
 				res.send('failed borrow');
 			}
 		}
 	});
-
 });
 
-app.delete('/books/:book_id/borrows/:borrow_id', function(req, res){
-	console.log('delete borrow');
+app.delete('/books/:book_id/borrows/:borrow_id', function (req, res) {
 	var am;
 
 	Book.findOne({ _id : req.params.book_id }, function (err, book) {
+		am = book.amount + 1;
+		Borrow.findOneAndRemove({ _id : req.params.borrow_id, book_id : req.params.book_id }, function(err, borrow) {
+			if (err) {
+				res.send(err);
+			} else {
+				res.send('success delete borrow');
+				Book.findOneAndUpdate({ _id : req.params.book_id }, { amount : am}, { new : true }, function (err, book) {});
+			}
+		});
+	});
+});
+
+/* get admin, get users/books, get users */
+
+app.get('/admin', requiresAdmin, function (req, res) {
+	
+	var promise, admin, users, borrows, books;
+
+	promise = Account.find({ isAdmin : true}).exec();
+	
+	promise.then(function (foundAdmin) {
+		admin = foundAdmin;
+		return Account.find().exec();
+	}).then(function (foundUsers) {
+		users = foundUsers;
+		return Book.find().exec();	
+	}).then(function (foundBooks) {
+		books = foundBooks;
+		return Borrow.find();
+	}).then(function (foundBorrows) {
+		borrows = foundBorrows;
+	}).then(function (err, foundAdmin, foundUsers, foundBorrows, foundBooks) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log('book: ', book);
-			console.log('am: ', am);
-			am = book.amount + 1;
-			Borrow.findOneAndRemove({ _id : req.params.borrow_id, book_id : req.params.book_id }, function(err, borrow) {
-				if (err) {
-					console.log('borrow delete err: ', err);
-					res.send(err);
-				} else {
-					console.log('success delete borrow');
-					res.send('success delete borrow');
-					Book.findOneAndUpdate({ _id : req.params.book_id }, { amount : am}, { new : true }, function (err, book) {
-						if (err) {
-							console.log(err);
-						} else {
-								console.log(book);
-						}
-					});
-				}
+			res.render('admin', {
+				user: users,
+				borrow: borrows,
+				book: books,
+				admin: admin
 			});
-		 }
-	});	
+		}
+	});
+});
+
+app.get('/user/borrows', function (req, res) {
+	Borrow.find({ user : req.user }, function (err, borrows) {
+		if (err) {
+			res.send(err);
+		} else {
+			res.render('userborrows', {
+				book: borrows
+			});
+		}
+	});
 });
 
 var server = app.listen(3000, function () {

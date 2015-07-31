@@ -8,10 +8,105 @@ body {
 	width: 960px;
 	margin: auto;
 }
-
+a {
+	text-decoration: none;
+	color: black;
+}
+header {
+	height: 40px;
+}
 /* new */
+/*
 .invalid{
 	display: none;
+	color: red;
+}
+#edit {
+	display: none;
+}
+.data {
+	float: left;
+	width: 85%;
+}
+.book-prop {
+	float: left;
+	width: 15%;
+}
+#delete-book {
+	clear: both;
+}
+#register{
+	display: none;
+}
+*/
+
+/* home */
+#home a {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.book-item {
+	width: 20%;
+	float: left;
+	text-align: center;
+}
+.img, .img img {
+	height: 100px;
+}
+/* book */
+#book {
+	height: 60px;
+}
+#back {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+#book-logout {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+#mybooks {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+#book-login {
+	position: absolute;
+	top: 10px;
+	right: 70px;
+}
+#book-cover {
+	float: left;
+	width: 30%;
+	height: 500px;
+}
+#book-cover img {
+	width: 30%;
+}
+#title {
+	float: left;
+	width: 35%;
+}
+#ISBN {
+	float: right;
+	width: 35%;
+	text-align: right;
+}
+#author {
+	float: left;
+	width: 35%;
+}
+#am {
+	float: right;
+	width: 35%;
+	text-align: right;
+}
+#description {
+	float: left;
+	width: 70%;
 }
 @media screen and (max-width: 960px){
 	

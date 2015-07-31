@@ -1,8 +1,23 @@
-<h3>title: {{book.title}}</h3>
-<p>ISBN: {{book.ISBN}}</p>
-<p>author: {{book.author}}</p>
-<p id="am">amount: {{book.amount}}</p>
-
-<a id="delete-book" href="http://localhost:3000/books/{{book._id}}">Delete</a>
-<a id="borrow-book" href="http://localhost:3000/books/{{book._id}}">Borrow</a>
-<a href="http://localhost:3000/books/{{book._id}}/borrows" >Borrows</a>
+<header id="book">
+	<a href="http://localhost:3000" id="back">Back</a>
+	{{#if user}}
+		<a href="/logout" id="book-logout">Log out</a>
+		<a href="/user/borrows" id="mybooks">My Books</a>
+		<a href="/book/{{book._id}}" id="book-borrow">Borrow</a>
+		{{else}}
+			<a href="/login" id="book-login">Login</a>			
+	{{/if}}
+	{{#if user.isAdmin}}
+		<a href="/admin" id="book-admin">Admin</a>
+	{{/if}}
+</header>	
+<div id="prop">
+	<div id="book-cover">
+		<img src="/images/book/{{book.file.filename}}" />
+	</div>
+	<h3 id="title">{{book.title}}</h3>
+	<p id="ISBN">ISBN: </br> {{book.ISBN}}</p>
+	<p id="author">{{book.author}}</p>
+	<p id="am">amount: {{book.amount}} </p>
+	<p id="description">description: </br> {{book.description}}</p>
+</div>

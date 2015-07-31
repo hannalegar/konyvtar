@@ -1,0 +1,43 @@
+<form id="book" action="/books" method="POST">
+	<p>ISBN:</p><input type="number" id="new-ISBN" name="ISBN">
+		<p id="invalid-ISBN" class="invalid"></p>
+	<p>author:</p><input type="text" id="new-author" name="author">
+		<p id="invalid-author" class="invalid"></p>
+	<p>title:</p><input type="text" id="new-title" name="title">
+		<p id="invalid-title" class="invalid"></p>
+	<p>description:</p><input type="text" id="new-description" name="description">
+		<p id="invelid-description" class="invalid"></p>
+	<p>amount:</p><input type="number" id="new-amount" name="amount">
+		<p id="invalid-amount" class="invalid"></p>
+	<p>File:</p><input type="file" name="file" id="file" >
+		<p id="invalid-file" class="invalid"></p>	
+	<input type="submit" value="Submit">
+</form>
+<a href="http://localhost:3000/books" >Books</a>
+
+<div id="edit">
+	<form action="http://localhost:3000/books/{{book._id}}" method="put" id="edit-form">
+		<p>ISBN:</p><input type="number" id="edit-ISBN" name="ISBN" value="{{book.ISBN}}">
+		<p>author:</p><input type="text" id="edit-author" name="author" value="{{book.author}}">
+		<p>title:</p><input type="text" id="edit-title" name="title" value="{{book.title}}">
+		<p>description:</p><input type="text" id="edit-description" name="description" value="{{book.description}}">
+		<p>amount:</p><input type="number" id="edit-amount" name="amount" value="{{book.amount}}">
+		<input type="submit" value="Submit">
+	</form>
+</div>
+
+<a>Users</a>
+<a>Books</a>
+<a>Borrows</a>
+
+<div id="users">
+	{{> users}}
+</div>
+
+<div id="books">
+	{{> books}}
+</div>
+
+<div id="borrows">
+	{{> borrows}}
+</div>

@@ -1,12 +1,16 @@
-<section id="books">
+<header id="home">
+	{{#if user}}
+		<a href="/logout">Logout</a>
+		{{else}}
+			<a href="/login">Login</a>	
+	{{/if}}
+</header>
+<div id="home-books">
 	{{#each book}}
-		<div class="book">
-			<a href="http://localhost:3000/books/{{_id}}">
-				<h3>title: {{title}}</h3>
-			</a>
-			<p>ISBN: {{ISBN}}</p>
-			<p>author: {{author}}</p>
-			<p>amount: {{amount}}</p>
-			</div>
-	{{/each}}
-</section>
+		<div class="book-item">
+			<div class="img"><img src="/images/book/{{file.filename}}" /></div>
+			<a href="/books/{{_id}}"><p>{{title}}</p></a>
+			<p>{{author}}</p>
+		</div>
+	{{/each}}		
+</div>

@@ -1,12 +1,16 @@
 <form id="book" action="/books" method="POST">
-	<p>ISBN:</p><input type="number" id="ISBN" name="ISBN">
+	<p>ISBN:</p><input type="number" id="new-ISBN" name="ISBN">
 		<p id="invalid-ISBN" class="invalid"></p>
-	<p>author:</p><input type="text" id="author" name="author">
+	<p>author:</p><input type="text" id="new-author" name="author">
 		<p id="invalid-author" class="invalid"></p>
-	<p>title:</p><input type="text" id="title" name="title">
+	<p>title:</p><input type="text" id="new-title" name="title">
 		<p id="invalid-title" class="invalid"></p>
-	<p>amount:</p><input type="number" id="amount" name="amount">
+	<p>description:</p><input type="text" id="new-description" name="description">
+		<p id="invelid-description" class="invalid"></p>
+	<p>amount:</p><input type="number" id="new-amount" name="amount">
 		<p id="invalid-amount" class="invalid"></p>
+	<p>File:</p><input type="file" name="file" id="file" >
+		<p id="invelid-file" class="invalid"></p>	
 	<input type="submit" value="Submit">
 </form>
 <a href="http://localhost:3000/books" >Books</a>
