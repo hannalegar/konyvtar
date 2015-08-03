@@ -6,43 +6,6 @@ $('input[type=file]').on('change', function (event) {
 });
 
 $('#book').submit(function (e) {
-	/*e.preventDefault();
-	console.log(this, this.action);
-	console.log($('#ISBN').val(), $('#author').val(), $('#title').val(), $('#amount').val());
-	
-	$.post(this. action,{
-			ISBN: $('#new-ISBN').val(),
-			title: $('#new-title').val(),
-			author: $('#new-author').val(),
-			description: $('#new-description').val(),
-			amount: $('#new-amount').val()
-		}, function(data){
-			console.log(data);
-			if (!data._id) {
-				console.log('failed');
-				if (data.ISBN) {
-					$('#invalid-ISBN').text(data.ISBN).show().fadeOut(3000);
-				}
-				if (data.author) {
-					$('#invalid-author').text(data.author).show().fadeOut(3000);
-				}
-				if (data.title) {
-					$('#invalid-title').text(data.title).show().fadeOut(3000);
-				}
-				if (data.description) {
-					$('#invalid-description').text(data.description).show().fadeOut(3000);
-				}
-				if (data.amount) {
-					$('#invalid-amount').text(data.amount).show().fadeOut(3000);
-				}
-			} else {
-				console.log(data);
-				var url = 'http://localhost:3000/books/' + data._id;
-				window.location.replace(url);
-			}
-		}
-	);*/
-	
 	e.preventDefault();
 	
 	var data = new FormData();
@@ -95,21 +58,18 @@ $('#book').submit(function (e) {
 	
 });
 /*admin*/
-/*
-$('#delete-book').click(function (e) {
+
+$('.delete-book').click(function (e) {
 	$.ajax(this.href, {
 		method: 'DELETE',
 		dataType: 'json',
 		complete: function(){
 			console.log('deleted');
 			 $(this).parent().remove();
-			window.location.replace("http://localhost:3000");
 		}
 	});
 });
-*/
 
-/* home */
 /*
 $('#borrow-book').click(function (e) {
 	console.log();
@@ -144,15 +104,10 @@ $('.borrow').on('click', '.delete-borrow', function (e) {
 
 $('#register').submit(function (e) {
 	e.preventDefault();
-	console.log(this, this.action);
-	console.log('username: ', $('#username').val());
-	console.log('password: ', $('#ps').val());
-	console.log('isAdmin: ', $('#isAdmin')[0].checked);
-	
+
 	$.post(this.action, {
 		username: $('#username').val(),
 		password: $('#ps').val(),
-		isAdmin: $('#isAdmin')[0].checked
 	}, function (data) {
 		if (!data._id) {
 			if (data.message) {
@@ -166,54 +121,39 @@ $('#register').submit(function (e) {
 			window.location.replace("http://localhost:3000/login");
 		}
 	}, 'JSON');
+
 });
 
-/*admin*/
-/*
-$('#edit-book').click(function (e) {
+$('.edit-book').click(function (e) {
 	e.preventDefault();
-	$('#book').hide();
-	$('#edit').show();
-	$('#edit-form').show();
+	$(this).parent().find('.edit-book').show();
+	$(this).parent().find('.edit').show();
 });
 
- $('#edit-form').on('submit', function (e) {
+ $('.edit-form').on('submit', function (e) {
 	e.preventDefault();
+	console.log(this, this.action);
 	
 	$.ajax(this.action, {
 		method: 'PUT',
 		dataType: 'json',
 		data: {
-			'ISBN': $('#edit-ISBN').val(),
-			'title': $('#edit-title').val(),
-			'author': $('#edit-author').val(),
-			'description': $('#edit-description').val(),
-			'amount': $('#edit-amount').val()
+			'ISBN': $('.edit-ISBN').val(),
+			'title': $('.edit-title').val(),
+			'author': $('.edit-author').val(),
+			'description': $('.edit-description').val(),
+			'amount': $('.edit-amount').val()
 		}, 
 		complete: function (data) {
 			console.log('success update');
 			console.log('data: ', data);
-			$('#title').text(data.responseJSON.title);
-			$('#ISBN').text(data.responseJSON.ISBN);
-			$('#author').text(data.responseJSON.author);
-			$('#description').text(data.responseJSON.description);
-			$('#am').text(data.responseJSON.amount);
+			console.log(data.responseJSON);
 		}
 	});
-	$('#edit').hide();
-	$('#book').show();
+	$('.edit').hide();
+	
  });
- */
- 
- /*admin --> add user*/
- /*
- $('#reg').on('click', 'a', function (e) {
-	 e.preventDefault();
-	 $('#login').hide();
-	 $('#register').show();
- });
- */
- 
+
  /*book, home*/
  /*
  $('#log').on('click', 'a', function (e) {
@@ -222,3 +162,71 @@ $('#edit-book').click(function (e) {
 	$('#register').hide();
  });
  */
+ 
+ $('#users').on('click', '.edit-user', function (e) {
+	e.preventDefault();
+	console.log($(this).parent());
+	$(this).hide();
+	$(this).parent().find('.delete-user').hide();
+	$(this).parent().find('.toAdmin').show();
+ });
+ 
+ $('.toAdmin').submit(function (e) {
+	 e.preventDefault();
+	 
+	 var id = this.action.split('/')[5];
+	 console.log(id); 
+	 
+	 console.log(this);
+	 console.log(this.action);
+	 console.log($('#toAdmin'));
+	 console.log('isAdmin: ', $('#isAdmin-'+id)[0].checked);
+	 
+	 $.ajax(this.action, {
+		 method: 'PUT',
+		 dataType: 'json',
+		 data: {
+			 'isAdmin': $('#isAdmin-'+id)[0].checked
+		 },
+		 complete: function (data) {
+			 console.log('succes edit');
+		 }
+	 });
+ });
+ 
+ $('#users').on('click', '.delete-user', function (e) {
+	e.preventDefault();
+	console.log(this, this.href);
+	
+	$.ajax(this.href, {
+		method: 'DELETE',
+		dataType: 'json',
+		context: document.activeElement,
+		complete: function () {
+			console.log('success deleted');
+			console.log(this);
+			$(this).parent().remove();
+		}
+	}); 
+ });
+ 
+ $('#admin-users').click(function (e) {
+	e.preventDefault();
+	$('#users').show();
+	$('#books').hide();
+	$('#borrows').hide(); 
+ });
+ 
+ $('#admin-books').click(function (e) {
+	e.preventDefault();
+	$('#users').hide();
+	$('#books').show();
+	$('#borrows').hide(); 
+ });
+ 
+ $('#admin-borrows').click(function (e) {
+	e.preventDefault();
+	$('#users').hide();
+	$('#books').hide();
+	$('#borrows').show(); 
+ });

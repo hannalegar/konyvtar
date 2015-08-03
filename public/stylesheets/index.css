@@ -108,6 +108,21 @@ header {
 	float: left;
 	width: 70%;
 }
+/* users */
+.toAdmin {
+	display: none;
+}
+#admin-users, #admin-books, #admin-borrows {
+	float: left;
+	width: 20%;
+}
+#users, #books, #borrows {
+	float: left;
+	width: 80%;
+}
+#books, #borrows {
+	display: none;
+}
 @media screen and (max-width: 960px){
 	
 }

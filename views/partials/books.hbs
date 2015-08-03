@@ -1,3 +1,18 @@
 {{#each book}}
-	<p>{{title}}</p>
+	<div class="book">
+		<p>{{title}}</p>
+		<a href="/books/{{_id}}" class="delete-book">Delete</a>
+		<a href="/books/{{_id}}" class="edit-book">Edit</a>
+		
+		<div class="edit" style="display: none">
+			<form action="http://localhost:3000/books/{{_id}}" method="put" class="edit-form">
+				<p>ISBN:</p><input type="number" class="edit-ISBN" name="ISBN" value="{{ISBN}}">
+				<p>author:</p><input type="text" class="edit-author" name="author" value="{{author}}">
+				<p>title:</p><input type="text" class="edit-title" name="title" value="{{title}}">
+				<p>description:</p><input type="text" class="edit-description" name="description" value="{{description}}">
+				<p>amount:</p><input type="number" class="edit-amount" name="amount" value="{{amount}}">
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+	</div>
 {{/each}}

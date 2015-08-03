@@ -1,4 +1,4 @@
-<form id="book" action="/books" method="POST">
+<form id="book" action="/books" method="POST" style="display: none">
 	<p>ISBN:</p><input type="number" id="new-ISBN" name="ISBN">
 		<p id="invalid-ISBN" class="invalid"></p>
 	<p>author:</p><input type="text" id="new-author" name="author">
@@ -13,9 +13,9 @@
 		<p id="invalid-file" class="invalid"></p>	
 	<input type="submit" value="Submit">
 </form>
-<a href="http://localhost:3000/books" >Books</a>
+<a href="http://localhost:3000/books" style="display: none">Books</a>
 
-<div id="edit">
+<div id="edit" style="display: none">
 	<form action="http://localhost:3000/books/{{book._id}}" method="put" id="edit-form">
 		<p>ISBN:</p><input type="number" id="edit-ISBN" name="ISBN" value="{{book.ISBN}}">
 		<p>author:</p><input type="text" id="edit-author" name="author" value="{{book.author}}">
@@ -26,18 +26,17 @@
 	</form>
 </div>
 
-<a>Users</a>
-<a>Books</a>
-<a>Borrows</a>
-
+<a id="admin-users" href="/admin">Users</a>
 <div id="users">
 	{{> users}}
 </div>
 
+<a id="admin-books" href="/admin">Books</a>
 <div id="books">
 	{{> books}}
 </div>
 
+<a id="admin-borrows" href="/admin">Borrows</a>
 <div id="borrows">
 	{{> borrows}}
 </div>
