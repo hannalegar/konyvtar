@@ -1,9 +1,10 @@
 <header id="book">
 	<a href="http://localhost:3000" id="back">Back</a>
 	{{#if user}}
+		<a href="/books/{{_id}}" id="menu">Menu</a>
 		<a href="/logout" id="book-logout">Log out</a>
 		<a href="/user/borrows" id="mybooks">My Books</a>
-		<a href="/book/{{book._id}}" id="book-borrow">Borrow</a>
+		<a href="/books/{{book._id}}" id="book-borrow">Borrow</a>
 		{{else}}
 			<a href="/login" id="book-login">Login</a>			
 	{{/if}}

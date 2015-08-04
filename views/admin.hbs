@@ -15,17 +15,6 @@
 </form>
 <a href="http://localhost:3000/books" style="display: none">Books</a>
 
-<div id="edit" style="display: none">
-	<form action="http://localhost:3000/books/{{book._id}}" method="put" id="edit-form">
-		<p>ISBN:</p><input type="number" id="edit-ISBN" name="ISBN" value="{{book.ISBN}}">
-		<p>author:</p><input type="text" id="edit-author" name="author" value="{{book.author}}">
-		<p>title:</p><input type="text" id="edit-title" name="title" value="{{book.title}}">
-		<p>description:</p><input type="text" id="edit-description" name="description" value="{{book.description}}">
-		<p>amount:</p><input type="number" id="edit-amount" name="amount" value="{{book.amount}}">
-		<input type="submit" value="Submit">
-	</form>
-</div>
-
 <a id="admin-users" href="/admin">Users</a>
 <div id="users">
 	{{> users}}

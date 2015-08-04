@@ -1,5 +1,8 @@
 {{#each book}}
-	<img class="img" src="/images/book/{{file.filename}}" />
-	<2>{{title}}</h2>
-	<p>{{author}}</p>
+	<div class="borrow">
+		<img class="img" src="/images/book/{{file.filename}}" />
+		<2>{{title}}</h2>
+		<p>{{author}}</p>
+		<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Delete</a>
+	</div>
 {{/each}}	

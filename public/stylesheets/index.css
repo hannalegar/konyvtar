@@ -3,6 +3,7 @@ html, body {
 }
 body {
 	font-size: 16px;
+	font-family: 'Fira sans', sans-serif;
 }
 #wrap {
 	width: 960px;
@@ -12,126 +13,196 @@ a {
 	text-decoration: none;
 	color: black;
 }
-header {
-	height: 40px;
-}
-/* new */
-/*
-.invalid{
-	display: none;
-	color: red;
-}
-#edit {
-	display: none;
-}
-.data {
-	float: left;
-	width: 85%;
-}
-.book-prop {
-	float: left;
-	width: 15%;
-}
-#delete-book {
-	clear: both;
-}
-#register{
-	display: none;
-}
-*/
-
 /* home */
-#home a {
-	position: absolute;
-	top: 10px;
-	right: 10px;
+#home {
+	height: 50px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+#home:after, #book:after {
+	clear: both;
+	border-bottom: 1px solid #CACACA;
+	content: " ";
+	display: block;
+	position: relative;
+	bottom: -20px;
+}
+#home a, #book-login, #menu {
+	float: right;
+	margin-top: 25px;
+	margin-right: 10px;
 }
 .book-item {
+	margin-top: 50px;
 	width: 20%;
-	float: left;
 	text-align: center;
+	float: left;
 }
 .img, .img img {
 	height: 100px;
+	margin-left: 30px;
+	margin-right: 30px;
 }
 /* book */
 #book {
-	height: 60px;
+	height: 50px;
+	margin-left: 30px;
+	margin-right: 30px;
 }
 #back {
-	position: absolute;
-	top: 10px;
-	left: 10px;
+	float: left;
+	margin-left: 10px;
+	margin-top: 25px;
 }
-#book-logout {
-	position: absolute;
-	top: 10px;
-	right: 10px;
+#prop {
+	margin-top: 40px;
 }
-#mybooks {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
-#book-login {
-	position: absolute;
-	top: 10px;
-	right: 70px;
+#book-logout, #mybooks, #book-borrow, #book-admin {
+	display: none;
 }
 #book-cover {
 	float: left;
-	width: 30%;
-	height: 500px;
+	width: 20%;
 }
-#book-cover img {
-	width: 30%;
-}
-#title {
+#title, #author {
 	float: left;
-	width: 35%;
+	width: 60%;
+	margin: 0;
 }
-#ISBN {
+#ISBN, #am {
 	float: right;
-	width: 35%;
-	text-align: right;
-}
-#author {
-	float: left;
-	width: 35%;
-}
-#am {
-	float: right;
-	width: 35%;
-	text-align: right;
+	width: 20%;
+	margin: 0; 
 }
 #description {
 	float: left;
-	width: 70%;
-}
-/* users */
-.toAdmin {
-	display: none;
-}
-#admin-users, #admin-books, #admin-borrows {
-	float: left;
-	width: 20%;
-}
-#users, #books, #borrows {
-	float: left;
 	width: 80%;
+	margin: 0;
 }
-#books, #borrows {
-	display: none;
+#description:after {
+	border-bottom: 1px solid #CACACA;
+	content: " ";
+	display: block;
+	position: relative;
+	width: 96%;
+	bottom: 20px;
+}
+#title {
+	margin-bottom: 20px;
+}
+#am {
+	margin-bottom: 20px
+}
+#book-cover img {
+	width: 90%;
 }
 @media screen and (max-width: 960px){
-	
+	#wrap {
+		width: auto;
+	}
 }
 @media screen and (max-width: 640px){
-	
+	body {
+		font-size: 12px;
+	}
+	#wrap {
+		width: auto;
+	}
+	/* home */
+	#home, #book {
+		height: 35px;
+		margin-left: 21px;
+		margin-right: 21px;
+	}
+	#home a, #book-login, #menu {
+		margin-top: 17px;
+		margin-right: 7px;
+	}
+	#home:after {
+		bottom: -14px;
+	}
+	.book-item {
+		margin-top: 35px;
+	}
+	.img, .img img {
+		height: 70px;
+	}
+	/* book */
+	#back {
+		margin-left: 7px;
+		margin-top: 17px;
+	}
+	#description:after {
+		bottom: 15px;
+	}
 }
 @media screen and (max-width: 480px){
-	
+	body {
+		font-size: 9px;
+	}
+	#wrap {
+		width: auto;
+	}
+	/* home */
+	#home, #book {
+		height: 24px;
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	#home a, #book-login, #menu {
+		margin-top: 12px;
+		margin-right: 5px;
+	}
+	#home:after {
+		bottom: -10px;
+	}
+	.book-item {
+		margin-top: 24px;
+	}
+	.img, .img img {
+		height: 49px;
+	}
+	/* book */
+	#back {
+		margin-left: 5px;
+		margin-top: 12px;
+	}
+	#description:after {
+		bottom: 12px;
+	}
 }
 @media screen and (max-width: 320px){
-	
+	body {
+		font-size: 7px;
+	}
+	#wrap {
+		width: auto;
+	}
+	/* home */
+	#home, #book {
+		height: 17px;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	#home a, #book-login, #menu {
+		margin-top: 8px;
+		margin-right: 3px;
+	}
+	#home:after {
+		bottom: -7px;
+	}
+	.book-item {
+		margin-top: 17px;
+	}
+	.img, .img img {
+		height: 35px;
+	}
+	/* book */
+	#back {
+		margin-left: 3px;
+		margin-top: 8px;
+	}
+	#description:after {
+		bottom: 10px;
+	}
 }
