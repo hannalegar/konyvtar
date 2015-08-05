@@ -219,10 +219,18 @@ $('.edit-book').click(function (e) {
 	});
  });
  
- $('#menu').click(function (e) {
-	e.preventDefault();
+ $('#menu').mouseover(function() {
+	$('.menu-items').show();
 	$('#book-logout').show();
 	$('#mybooks').show();
 	$('#book-borrow').show();
 	$('#book-admin').show(); 
+ });
+ 
+ $('#book-menu').mouseleave(function() {
+	 $('.menu-items').hide();
+	 $('#book-logout').hide();
+	$('#mybooks').hide();
+	$('#book-borrow').hide();
+	$('#book-admin').hide(); 
  });

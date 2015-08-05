@@ -15,17 +15,20 @@
 </form>
 <a href="http://localhost:3000/books" style="display: none">Books</a>
 
-<a id="admin-users" href="/admin">Users</a>
+<div id="admin-menu">
+<a id="admin-users" href="/admin">Users</a><br>
+<a id="admin-books" href="/admin">Books</a><br>
+<a id="admin-borrows" href="/admin">Borrows</a><br>
+</div>
+
 <div id="users">
 	{{> users}}
 </div>
 
-<a id="admin-books" href="/admin">Books</a>
 <div id="books">
 	{{> books}}
 </div>
 
-<a id="admin-borrows" href="/admin">Borrows</a>
 <div id="borrows">
 	{{> borrows}}
 </div>
