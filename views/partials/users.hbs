@@ -1,15 +1,18 @@
 {{#each user}}
 	<div class="user">
-		<p>{{username}}</p>
-		<a href="/admin/user/{{_id}}" class="delete-user">Delete</a>
-		<a href="/admin/user/{{_id}}" class="edit-user">Edit</a>
-		
-		<form class="toAdmin" action="/admin/user/{{_id}}">
+		<p class="clear"></p>
+		<p class="username">{{username}}</p>
+		<div class="user-menu">
+			<a href="/admin/user/{{_id}}" class="delete-user">Delete</a>
+			<a href="/admin/user/{{_id}}" class="edit-user">Edit</a>
+		</div>
+		<div id="{{_id}}">
+		<form class="toAdmin" action="/admin/user/{{_id}}" id="{{_id}}">
 			<p>isAdmin</p>
 			{{#if isAdmin}}
-				<input type="checkbox" name="isAdmin" id="isAdmin-{{_id}}" checked>
+				<input type="checkbox" name="isAdmin" id="isAdmin-{{_id}}" class="checkbox" checked>
 			{{else}}
-				<input type="checkbox" name="isAdmin" id="isAdmin-{{_id}}">
+				<input type="checkbox" name="isAdmin" id="isAdmin-{{_id}}" class="checkbox">
 			{{/if}}
 			<input type="submit" value="Submit" name="submit">
 		</form>

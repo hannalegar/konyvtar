@@ -140,30 +140,38 @@ $('.edit-book').click(function (e) {
 	});
  });
  
- $('#users').on('click', '.edit-user', function (e) {
+ var user_id;
+ 
+ $('.user-menu').on('click', '.edit-user', function (e) {
 	e.preventDefault();
-	console.log($(this).parent());
+	console.log(this);
+	console.log(this.href);
+	 var user_id = this.href.split('/')[5]; 
+	console.log('user_id', user_id);
+	
 	$(this).hide();
 	$(this).parent().find('.delete-user').hide();
-	$(this).parent().find('.toAdmin').show();
+	$(this).parent().parent().find('.toAdmin').show();
  });
  
  $('.toAdmin').submit(function (e) {
 	 e.preventDefault();
 	 
-	 var id = this.action.split('/')[5];
-	 console.log(id); 
+	 var user_id = this.action.split('/')[5]; 
 	 
-	 console.log(this);
-	 console.log(this.action);
-	 console.log($('#toAdmin'));
-	 console.log('isAdmin: ', $('#isAdmin-'+id)[0].checked);
+	 console.log($('#'+user_id));
+	 console.log($('#'+user_id).parent());
+	 console.log($('#'+user_id).parent().find('user-menu'));
+	 
+	 $('#'+user_id).hide();
+	 $('#'+user_id).parent().find('.delete-user').show();
+	 $('#'+user_id).parent().find('.edit-user').show();
 	 
 	 $.ajax(this.action, {
 		 method: 'PUT',
 		 dataType: 'json',
 		 data: {
-			 'isAdmin': $('#isAdmin-'+id)[0].checked
+			 'isAdmin': $('#isAdmin-'+user_id)[0].checked
 		 },
 		 complete: function (data) {
 			 console.log('succes edit');
@@ -233,4 +241,8 @@ $('.edit-book').click(function (e) {
 	$('#mybooks').hide();
 	$('#book-borrow').hide();
 	$('#book-admin').hide(); 
+ });
+ 
+ $('#menu').click(function (e) {
+	 e.preventDefault();
  });
