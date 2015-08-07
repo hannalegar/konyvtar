@@ -1,8 +1,9 @@
 <header id="home">
 	{{#if user}}
-		<a href="/logout">Logout</a>
+		<a href="/logout" class="home-login">Logout</a>
 		{{else}}
-			<a href="/login">Login</a>	
+			<a href="/login" class="home-login">Login</a>
+			<a href="/register" id="home-reg">Registration</a>	
 	{{/if}}
 </header>
 <div id="home-books">

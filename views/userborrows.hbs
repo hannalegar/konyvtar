@@ -1,8 +1,13 @@
+<header id="myborrows-head">
+	<a href="/">Home</a>
+</header>
+<h1>My Books</h1>
 {{#each book}}
-	<div class="borrow">
+	<div class="myborrows">
 		<img class="img" src="/images/book/{{file.filename}}" />
-		<2>{{title}}</h2>
+		<h2>{{title}}</h2>
 		<p>{{author}}</p>
 		<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Delete</a>
+		<p class="borrow-clear"></p>
 	</div>
 {{/each}}	

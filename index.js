@@ -300,6 +300,7 @@ app.get('/admin', requiresAdmin, function (req, res) {
 		if (err) {
 			console.log(err);
 		} else {
+			console.log(books);
 			res.render('admin', {
 				user: users,
 				borrow: borrows,

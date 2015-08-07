@@ -1,17 +1,22 @@
+<div id="add">
+	<a href="/books/{{_id}}" id="add-book">Add</a>
+</div>
 {{#each book}}
 	<div class="book">
-		<p>{{title}}</p>
-		<a href="/books/{{_id}}" class="delete-book">Delete</a>
-		<a href="/books/{{_id}}" class="edit-book">Edit</a>
-		
-		<div class="edit" style="display: none">
+		<p class="clear"></p>
+		<p class="title">{{title}}</p>
+		<div class="book-menu">
+			<a href="/books/{{_id}}" class="delete-book">Delete</a>
+			<a href="/books/{{_id}}" class="edit-book">Edit</a>
+		</div>	
+		<div class="edit" id="{{_id}}">
 			<form action="http://localhost:3000/books/{{_id}}" method="put" class="edit-form">
 				<p>ISBN:</p><input type="number" class="edit-ISBN" name="ISBN" value="{{ISBN}}">
 				<p>author:</p><input type="text" class="edit-author" name="author" value="{{author}}">
 				<p>title:</p><input type="text" class="edit-title" name="title" value="{{title}}">
 				<p>description:</p><input type="text" class="edit-description" name="description" value="{{description}}">
 				<p>amount:</p><input type="number" class="edit-amount" name="amount" value="{{amount}}">
-				<input type="submit" value="Submit">
+				<input type="submit" value="Submit" class="edit-submit">
 			</form>
 		</div>
 	</div>

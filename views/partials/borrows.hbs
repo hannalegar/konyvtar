@@ -1,5 +1,10 @@
 {{#each borrow}}
-	<p>{{title}}</p>
-	<p>{{user}}</p>
-	<p>{{datum date}}</p>
+	<div class="borrow">
+		<p class="borrow-title">Book title:</p>
+		<p class="bt">{{title}}</p>
+		<p class="borrow-user">Username</p>
+		<p class="bu">{{user}}</p>
+		<p class="borrow-date">Date</p>
+		<p class="bd">{{datum date}}</p>
+	</div>
 {{/each}}

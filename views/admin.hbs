@@ -1,4 +1,6 @@
-<form id="book" action="/books" method="POST" style="display: none">
+<a href="/" id="admin-home">Home</a>
+
+<form id="book" action="/books" method="POST">
 	<p>ISBN:</p><input type="number" id="new-ISBN" name="ISBN">
 		<p id="invalid-ISBN" class="invalid"></p>
 	<p>author:</p><input type="text" id="new-author" name="author">
@@ -11,24 +13,22 @@
 		<p id="invalid-amount" class="invalid"></p>
 	<p>File:</p><input type="file" name="file" id="file" >
 		<p id="invalid-file" class="invalid"></p>	
-	<input type="submit" value="Submit">
+	<input type="submit" value="Submit" id="book-submit">
 </form>
-<a href="http://localhost:3000/books" style="display: none">Books</a>
 
 <div id="admin-menu">
 <a id="admin-users" href="/admin">Users</a><br>
 <a id="admin-books" href="/admin">Books</a><br>
 <a id="admin-borrows" href="/admin">Borrows</a><br>
 </div>
-
-<div id="users">
-	{{> users}}
+<div id="borrows">
+	{{> borrows}}
 </div>
 
 <div id="books">
 	{{> books}}
 </div>
 
-<div id="borrows">
-	{{> borrows}}
+<div id="users">
+	{{> users}}
 </div>
