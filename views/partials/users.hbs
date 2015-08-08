@@ -6,8 +6,8 @@
 			<a href="/admin/user/{{_id}}" class="delete-user">Delete</a>
 			<a href="/admin/user/{{_id}}" class="edit-user">Edit</a>
 		</div>
-		<div id="{{_id}}">
-		<form class="toAdmin" action="/admin/user/{{_id}}" id="{{_id}}">
+		<div class="edit-user-form" id="{{_id}}">
+		<form class="toAdmin" action="/admin/user/{{_id}}" method="put">
 			<p>isAdmin</p>
 			{{#if isAdmin}}
 				<input type="checkbox" name="isAdmin" id="isAdmin-{{_id}}" class="checkbox" checked>

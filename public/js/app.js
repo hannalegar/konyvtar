@@ -153,17 +153,36 @@ $('.book').on('click', '.edit-book', function (e) {
  
  var user_id;
  
- $('.user-menu').on('click', '.edit-user', function (e) {
+ $('.user-menu').on('click', '.edit-user', function(e) {
 	e.preventDefault();
-	console.log(this);
-	console.log(this.href);
-	 var user_id = this.href.split('/')[5]; 
-	console.log('user_id', user_id);
 	
-	$(this).hide();
-	$(this).parent().find('.delete-user').hide();
-	$(this).parent().parent().find('.toAdmin').show();
+	user_id = this.href.split('/')[5];
+	console.log($(this).parent());
+
+	$('#'+user_id).show();
+	$(this).parent().hide();
+
  });
+ 
+ $('.edit-user-form').on('submit', function (e) {
+	e.preventDefault();
+	
+	$.ajax(this.action, {
+		method: 'PUT',
+	 	dataType: 'json',
+		data: {
+			'isAdmin': $('#isAdmin-'+user_id)[0].checked
+		},
+		complete: function (data) {
+			console.log('succes edit');
+		}
+	 });
+	 
+	 $(this).hide();
+	 $(this).parent().parent().find('.user-menu').show()
+ });
+ 
+ /*
  
  $('.toAdmin').submit(function (e) {
 	 e.preventDefault();
@@ -189,7 +208,7 @@ $('.book').on('click', '.edit-book', function (e) {
 		 }
 	 });
  });
- 
+ */
  $('#users').on('click', '.delete-user', function (e) {
 	e.preventDefault();
 	

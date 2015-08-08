@@ -2,12 +2,14 @@
 	<a href="/">Home</a>
 </header>
 <h1>My Books</h1>
-{{#each book}}
-	<div class="myborrows">
-		<img class="img" src="/images/book/{{file.filename}}" />
-		<h2>{{title}}</h2>
-		<p>{{author}}</p>
-		<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Delete</a>
-		<p class="borrow-clear"></p>
-	</div>
-{{/each}}	
+<div id="userborrows-books">
+	{{#each book}}
+		<div class="myborrow-books">
+			<img class="myborrow-img" src="/images/book/{{file.filename}}" />
+			<h2>{{title}}</h2>
+			<p>{{author}}</p>
+			<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Delete</a>
+			<p class="borrow-clear"></p>
+		</div>
+	{{/each}}
+</div>	

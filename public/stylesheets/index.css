@@ -184,8 +184,10 @@ a {
 	float: right;
 	margin-top: 15px;
 }
-.toAdmin {
+.edit-user-form {
 	display: none;
+}
+.toAdmin {
 	float: right;
 	margin-right: -50px;
 }
@@ -337,9 +339,6 @@ a {
 	margin-top: 10px;
 }
 /* userborrows */
-.myborrows {
-	margin: 30px;
-}
 h1 {
 	text-align: center;
 	font-size: 2em;
@@ -358,6 +357,24 @@ h1:after {
 	font-size: 0.8em;
 	margin: 15px;
 	padding: 10px;
+}
+#userborrows-books {
+	margin: 30px;
+}
+#myborrows-head {
+	margin-left: 30px;
+	margin-top: 30px;
+}
+.myborrow-books {
+	width: 20%;
+	float: left;
+	text-align: center;
+}
+.myborrow-img {
+	height: 100px;
+	margin-left: 30px;
+	margin-right: 30px;
+	text-align: center;
 }
 @media screen and (max-width: 960px){
 	#wrap {
@@ -384,10 +401,10 @@ h1:after {
 	#home:after {
 		bottom: -14px;
 	}
-	.book-item {
+	.book-item, myborrow-books {
 		margin-top: 35px;
 	}
-	.img, .img img {
+	.img, .img img, .myborrow-img  {
 		height: 70px;
 	}
 	/* book */
@@ -414,6 +431,61 @@ h1:after {
 		margin-top: 45px;
 		margin-right: -52px;
 	}
+	#prop {
+		margin-top: 42px;
+	}
+	#back {
+		margin-top: 17px;
+		margin-left: 7px;
+	}
+	#menu {
+		margin-top: 17px;
+		margin-right: 7px;
+	}
+	#admin-home {
+		margin: 10px;
+	}
+	#admin-menu {
+		margin: 14px;
+	}
+	#admin-users, #admin-books, #admin-borrows {
+		padding: 7px;
+		margin: 7px;
+	}
+	#admin-books {
+		margin-left: -54px;
+		margin-top: 25px;
+	}
+	#admin-borrows {
+		margin-left: -57px;
+		margin-top: 42px;
+	}
+	#users {
+		margin-left: 15px;
+	}
+	.clear:after {
+		bottom: -60px;
+	}
+	.borrow:nth-of-type(1) {
+		margin-top: -55px;
+	}
+	.img{
+		margin-left: 0px;
+	}
+	#myborrows-head {
+		margin-left: 20px;
+		margin-top: 20px;
+	}
+	h1 {
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	#userborrow-books {
+		margin: 0px;
+	}
+	.myborrow-books {
+		width: 25%;
+	}
 }
 @media screen and (max-width: 480px){
 	body {
@@ -435,10 +507,10 @@ h1:after {
 	#home:after {
 		bottom: -10px;
 	}
-	.book-item {
+	.book-item, myborrow-books {
 		margin-top: 24px;
 	}
-	.img, .img img {
+	.img, .img img, .myborrow-img {
 		height: 49px;
 	}
 	/* book */
@@ -465,6 +537,64 @@ h1:after {
 		margin-top: 30px;
 		margin-right: -40px;
 	}
+	#prop {
+		margin-top: 30px;
+	}
+	#back {
+		margin-top: 13px;
+		margin-left: 5px;
+	}
+	#menu {
+		margin-top: 13px;
+		margin-right: 5px;
+	}
+	#admin-home {
+		margin: 7px;
+	}
+	#admin-menu {
+		margin: 10px;
+	}
+	#admin-users, #admin-books, #admin-borrows {
+		padding: 5px;
+		margin: 5px;
+	}
+	#admin-books {
+		margin-left: -40px;
+		margin-top: 17px;
+	}
+	#admin-borrows {
+		margin-left: -43px;
+		margin-top: 29px;
+	}
+	#users, #books, #borrows {
+		margin-left: 10px;
+	}
+	.user:nth-of-type(1) {
+		margin-top: -60px;
+	}
+	.clear:after {
+		bottom: -43px;
+	}
+	.user-menu {
+		margin-top: 10px;
+	}
+	#add {
+		margin-top: -70px;
+	}
+	.borrow:nth-of-type(1) {
+		margin-top: -40px;
+	}
+	.img {
+		margin-left: -5px;
+	}
+	#myborrows-head {
+		margin-left: 15px;
+		margin-top: 15px;
+	}
+	h1 {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
 }
 @media screen and (max-width: 320px){
 	body {
@@ -486,10 +616,10 @@ h1:after {
 	#home:after {
 		bottom: -7px;
 	}
-	.book-item {
+	.book-item, myborrow-books {
 		margin-top: 17px;
 	}
-	.img, .img img {
+	.img, .img img, .myborrow-img {
 		height: 35px;
 	}
 	/* book */
@@ -515,5 +645,62 @@ h1:after {
 	#book-admin {
 		margin-top: 18px;
 		margin-right: -30px;
+	}
+	#prop {
+		margin-top: 21px;
+	}
+	#back {
+		margin-top: 9px;
+		margin-left: 3px;
+	}
+	#menu {
+		margin-top: 9px;
+		margin-right: 3px;
+	}
+	#admin-home {
+		margin: 5px;
+	}
+	#admin-menu {
+		margin: 7px;
+	}
+	#admin-users, #admin-books, #admin-borrows {
+		padding: 4px;
+		margin: 4px;
+	}
+	#admin-books {
+		margin-left: -32px;
+		margin-top: 12px;
+	}
+	#admin-borrows {
+		margin-left: -33px;
+		margin-top: 21px;
+	}
+	#users {
+		margin-left: 5px;
+	}
+	.user:nth-of-type(1) {
+		margin-top: -45px;
+	}
+	.clear:after {
+		bottom: -33px;
+	}
+	.user-menu {
+		margin-top: 7px;
+	}
+	#add {
+		margin-top: -55px;
+	}
+	.borrow:nth-of-type(1) {
+		margin-top: -30px;
+	}
+	.img {
+		margin-left: -10px;
+	}
+	h1 {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	.myborrow-books {
+		width: 40%;
 	}
 }
