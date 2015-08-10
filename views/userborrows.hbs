@@ -5,11 +5,16 @@
 <div id="userborrows-books">
 	{{#each book}}
 		<div class="myborrow-books">
-			<img class="myborrow-img" src="/images/book/{{file.filename}}" />
-			<h2>{{title}}</h2>
+			<a href="/books/{{book_id}}">
+				<img class="myborrow-img" src="/images/book/{{file.filename}}" />
+				<h2>{{title}}</h2>
+			</a>
 			<p>{{author}}</p>
-			<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Delete</a>
+			<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Return</a>
+			<p id="return-book" style="display: none">Thank you for returning the {{title}}</p>
 			<p class="borrow-clear"></p>
 		</div>
+	{{else}}
+		<p>There is no book!</p>	
 	{{/each}}
-</div>	
+</div>

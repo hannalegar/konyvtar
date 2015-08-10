@@ -6,7 +6,8 @@ var Borrow = mongoose.Schema({
 	user: {type: String, required: true},
 	book_id :  mongoose.Schema.Types.ObjectId,
 	file: {type: Object, required: true}, 
-	date: {type: Date, default: Date.now}
+	date: {type: Date, default: Date.now},
+	amount: {type: Number, required: true}
 });
 
 module.exports = mongoose.model('Borrow', Borrow);

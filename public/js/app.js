@@ -75,7 +75,7 @@ $('.delete-book').click(function (e) {
 		method: 'DELETE',
 		dataType: 'json',
 		context: document.activeElement,
-		complete: function () {
+		complete: function () {			
 			console.log('deleted');
 			$(this).parent().parent().remove();
 		}
@@ -90,6 +90,9 @@ $('#book-borrow').click(function (e) {
 		complete: function (data) {
 			console.log('data: ', data);
 			console.log('complete');
+			console.log(data.responseJSON.amount);
+			$('#amount').text(data.responseJSON.amount);
+			$('#success-borrow').text('Book has been borred!').show().fadeOut(3000);
 		}
 	});
 	e.preventDefault();
@@ -103,15 +106,20 @@ $('#register').submit(function (e) {
 		password: $('#ps').val(),
 	}, function (data) {
 		if (!data._id) {
-			if (data.message) {
-				$('#invalid-username').text(data.message).show().fadeOut(3000);
+			/*if (!data.username) {
+				$('#invalid-username').text('Field username is not set!').show().fadeOut(3000);
 			}
 			if (!data.password) {
 				$('#invalid-ps').text('Field password is not set!').show().fadeOut(3000);
-			}
+			}*/
+			$('#invalid-ps').text(data.message).show().fadeOut(3000);
 		} else {
 			console.log('success');
-			window.location.replace("http://localhost:3000/login");
+			$('#success').text('Success registration!').show().fadeOut(3000);
+			setTimeout( function() {
+				window.location.replace("http://localhost:3000/login")
+			}, 4500);   
+
 		}
 	}, 'JSON');
 
@@ -182,33 +190,6 @@ $('.book').on('click', '.edit-book', function (e) {
 	 $(this).parent().parent().find('.user-menu').show()
  });
  
- /*
- 
- $('.toAdmin').submit(function (e) {
-	 e.preventDefault();
-	 
-	 var user_id = this.action.split('/')[5]; 
-	 
-	 console.log($('#'+user_id));
-	 console.log($('#'+user_id).parent());
-	 console.log($('#'+user_id).parent().find('user-menu'));
-	 
-	 $('#'+user_id).hide();
-	 $('#'+user_id).parent().find('.delete-user').show();
-	 $('#'+user_id).parent().find('.edit-user').show();
-	 
-	 $.ajax(this.action, {
-		 method: 'PUT',
-		 dataType: 'json',
-		 data: {
-			 'isAdmin': $('#isAdmin-'+user_id)[0].checked
-		 },
-		 complete: function (data) {
-			 console.log('succes edit');
-		 }
-	 });
- });
- */
  $('#users').on('click', '.delete-user', function (e) {
 	e.preventDefault();
 	
@@ -246,35 +227,48 @@ $('.book').on('click', '.edit-book', function (e) {
  
  
  $('.delete-borrow').click(function (e) {
+	var me = this; 
 	e.preventDefault();
 	console.log(this, this.href);
+
+
 	$.ajax(this.href, {
 		method: 'DELETE',
 		dataType: 'json',
 		context: document.activeElement,
 		complete: function() {
-			console.log('deleted borrow');
-			$(this).parent().remove();
+			console.log('deleted borrow');	
+			
+			$(me).parent().find($('#return-book')).show();
+			setTimeout( function () {
+				$(me).parent().remove();	
+			}, 3000);
 		}
 	});
  });
  
  $('#menu').mouseover(function() {
 	$('.menu-items').show();
-	$('#book-logout').show();
-	$('#mybooks').show();
-	$('#book-borrow').show();
-	$('#book-admin').show(); 
  });
  
  $('#book-menu').mouseleave(function() {
-	 $('.menu-items').hide();
-	 $('#book-logout').hide();
-	$('#mybooks').hide();
-	$('#book-borrow').hide();
-	$('#book-admin').hide(); 
+	 $('.menu-items').hide();	 
  });
  
  $('#menu').click(function (e) {
+	 e.preventDefault();
+ });
+ 
+ $('#home-menu').mouseover(function	() {
+	 $('#home-mybooks').show();
+	 $('#home-logout').show();
+ });
+ 
+ $('#home').mouseleave(function() {
+	 $('#home-mybooks').hide();
+	 $('#home-logout').hide();	 
+ });
+ 
+ $('#home-menu').click(function (e) {
 	 e.preventDefault();
  });

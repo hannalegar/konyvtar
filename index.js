@@ -239,13 +239,15 @@ app.post('/books/:book_id', function (req, res) {
 		if (err) {
 			res.send(err);
 		} else {
+			console.log(book.amount);
 			if (book.amount > 0) {
-				
-				Borrow.create({ title : book.title, user : req.user.username, book_id : req.params.book_id, file: book.file }, function(err, borrow){
+				am = book.amount - 1;
+				console.log(typeof am);
+				Borrow.create({ title : book.title, user : req.user.username, book_id : req.params.book_id, file: book.file, amount: am }, function(err, borrow){
 					if (err) {
 						res.send(err);
 					} else {
-						am = book.amount - 1;
+						console.log('borrow: ', borrow);
 						res.send(borrow);
 						Book.findOneAndUpdate( {_id : req.params.book_id }, { amount : am}, { new : true },  function(err, book){
 							if (err) {
@@ -272,7 +274,15 @@ app.delete('/books/:book_id/borrows/:borrow_id', function (req, res) {
 			if (err) {
 				res.send(err);
 			} else {
-				Book.findOneAndUpdate({ _id : req.params.book_id }, { amount : am}, { new : true }, function (err, book) {});
+				Book.findOneAndUpdate({ _id : req.params.book_id }, { amount : am}, { new : true }, function (err, book) {
+					if (err) {
+						console.log(err);
+					} else {
+						console.log('book updated');					
+					}
+				});
+				console.log('success delete borrow');
+				res.send('success delete borrow');
 			}
 		});
 	});

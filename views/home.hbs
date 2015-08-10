@@ -1,16 +1,20 @@
 <header id="home">
-	{{#if user}}
-		<a href="/logout" class="home-login">Logout</a>
+		{{#if user}}
+			<a href="/" id="home-menu">Menu</a>
+			<a href="/user/borrows" id="home-mybooks">My Books</a>
+			<a href="/logout" id="home-logout">Logout</a>
 		{{else}}
 			<a href="/login" class="home-login">Login</a>
 			<a href="/register" id="home-reg">Registration</a>	
-	{{/if}}
+		{{/if}}
 </header>
 <div id="home-books">
 	{{#each book}}
 		<div class="book-item">
-			<div class="img"><img src="/images/book/{{file.filename}}" /></div>
-			<a href="/books/{{_id}}"><p>{{title}}</p></a>
+			<a href="/books/{{_id}}">
+				<div class="img"><img src="/images/book/{{file.filename}}" /></div>
+				<p class="book-title">{{title}}</p>
+			</a>
 			<p>{{author}}</p>
 		</div>
 	{{/each}}		

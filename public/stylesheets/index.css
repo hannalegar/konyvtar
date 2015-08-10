@@ -32,6 +32,22 @@ a {
 	margin-top: 25px;
 	margin-right: 10px;
 }
+#home-menu {
+	float: right;
+	margin-top: 20px;
+}
+#home-mybooks {
+	display: none;
+	float: right;
+	margin-top: 20px;
+	margin-right: 10px;
+}
+#home-logout {
+	display: none;
+	float: right;
+	margin-top: 40px;
+	margin-right: -70px;
+}
 #home-reg {
 	float: right;
 	margin-right: -40px;
@@ -42,6 +58,10 @@ a {
 	width: 20%;
 	text-align: center;
 	float: left;
+}
+.book-title  {
+	font-size: 1.2em;
+	font-weight: bold;
 }
 .img, .img img {
 	height: 100px;
@@ -60,26 +80,22 @@ a {
 	margin-top: 25px;
 }
 #book-logout, #mybooks, #book-borrow, #book-admin {
-	display: none;
 	float: right;
 }
 #mybooks {
-	margin-top: 10px;
+	margin-top: 25px;
+	margin-right: 5px;
+}
+#book-logout {
+	margin-top:	45px;
+	margin-right: -70px;
 }
 #book-borrow {
 	margin-top: 20px;
-}
-#book-logout {
-	margin-top:	5px;
-	margin-right: 15px;
-}
-#mybooks {
-	margin-top: 25px;
-	margin-right: -55px;
-}
-#book-borrow {
-	margin-top: 45px;
 	margin-right: -70px;
+	padding: 10px;
+	border: 1px solid #CACACA;
+	border-radius: 30px;
 }
 #book-admin {
     float: right;
@@ -88,6 +104,7 @@ a {
 }
 .menu-items {
 	float: right;
+	display: none;
 }
 #prop {
 	margin-top: 60px;
@@ -95,6 +112,10 @@ a {
 #book-cover {
 	float: left;
 	width: 20%;
+}
+#left {
+	float: left;
+	width: 80%;
 }
 #title, #author {
 	float: left;
@@ -108,7 +129,7 @@ a {
 }
 #description {
 	float: left;
-	width: 80%;
+	width: 92%;
 	margin: 0;
 }
 #description:after {
@@ -117,13 +138,22 @@ a {
 	display: block;
 	position: relative;
 	width: 96%;
-	bottom: 20px;
+	bottom: -5px;
+}
+#prop-desc {
+	float: left;
+	margin-top: 15px;
 }
 #title {
 	margin-bottom: 20px;
 }
 #am {
 	margin-bottom: 20px
+}
+#amount {
+	float: right;
+	margin-right: -80px;
+	margin-top: 0;
 }
 #book-cover img {
 	width: 90%;
@@ -416,23 +446,27 @@ h1:after {
 		bottom: 15px;
 	}
 	#book-logout {
-		margin-top: 5px;
-		margin-right: 5px;
+		margin-top: 30px;
+		margin-right: -52px;
 	}
 	#mybooks {
 		margin-top: 17px;
-		margin-right: -40px;
+		margin-right: 5px;
 	}
 	#book-borrow {
-		margin-top: 30px;
-		margin-right: -52px;
+		margin-top: 15px;
+		margin-right: -40px;
 	}
 	#book-admin {
 		margin-top: 45px;
 		margin-right: -52px;
+		margin-bottom: -10px;
 	}
 	#prop {
 		margin-top: 42px;
+	}
+	#amount {
+		margin-right: -60px;
 	}
 	#back {
 		margin-top: 17px;
@@ -441,6 +475,9 @@ h1:after {
 	#menu {
 		margin-top: 17px;
 		margin-right: 7px;
+	}
+	#description:after {
+		bottom: -5px;
 	}
 	#admin-home {
 		margin: 10px;
@@ -522,23 +559,30 @@ h1:after {
 		bottom: 12px;
 	}
 	#book-logout {
-		margin-top: 3px;
-		margin-right: 5px;
+		margin-top: 25px;
+		margin-right: -40px;
 	}
 	#mybooks {
-		margin-top: 12px;
-		margin-right: -30px;
+		margin-top: 13px;
+		margin-right: 5px;
 	}
 	#book-borrow {
-		margin-top: 20px;
-		margin-right: -40px;
+		margin-top: 13px;
+		margin-right: -30px;
 	}
 	#book-admin {
-		margin-top: 30px;
+		margin-top: 37px;
 		margin-right: -40px;
+		margin-bottom: -10px;
 	}
 	#prop {
 		margin-top: 30px;
+	}
+	#amount {
+		margin-right: -45px;
+	}
+	#description:after {
+		bottom: -7px;
 	}
 	#back {
 		margin-top: 13px;
@@ -630,24 +674,30 @@ h1:after {
 	#description:after {
 		bottom: 10px;
 	}
-	#logout {
-		margin-top: 3px;
-		margin-right: 5px;
-	}
-	#mybooks {
-		margin-top: 8px;
-		margin-right: -24px;
-	}
-	#book-borrow {
-		margin-top: 13px;
+	#book-logout {
+		margin-top: 18px;
 		margin-right: -30px;
 	}
+	#mybooks {
+		margin-top: 9px;
+		margin-right: 5px;
+	}
+	#book-borrow {
+		margin-top: 10px;
+		margin-right: -22px;
+	}
 	#book-admin {
-		margin-top: 18px;
+		margin-top: 28px;
 		margin-right: -30px;
 	}
 	#prop {
 		margin-top: 21px;
+	}
+	#amount {
+		margin-right: -35px;
+	}
+	#description:after {
+		bottom: -5px;
 	}
 	#back {
 		margin-top: 9px;
