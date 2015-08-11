@@ -87,13 +87,14 @@ $('#book-borrow').click(function (e) {
 	$.ajax(this.href, {
 		method: 'POST',
 		dataType: 'json',
-		complete: function (data) {
-			console.log('data: ', data);
-			console.log('complete');
-			console.log(data.responseJSON.amount);
-			$('#amount').text(data.responseJSON.amount);
+		success: function (data) {
+			console.log(data);
+			$('#amount').text(data.amount);
 			$('#success-borrow').text('Book has been borred!').show().fadeOut(3000);
-		}
+		},
+		error: function () {
+			$('#success-borrow').text('This book can not be borrowed right now!').show().fadeOut(3000);
+		} 
 	});
 	e.preventDefault();
 });
@@ -112,13 +113,16 @@ $('#register').submit(function (e) {
 			if (!data.password) {
 				$('#invalid-ps').text('Field password is not set!').show().fadeOut(3000);
 			}*/
-			$('#invalid-ps').text(data.message).show().fadeOut(3000);
+			$('#invalid-ps').text(data.message).show();
+			setTimeout(function	() {
+				$('#invalid-ps').hide();
+			}, 1800);
 		} else {
 			console.log('success');
-			$('#success').text('Success registration!').show().fadeOut(3000);
+			$('#success').text('Success registration!').show();
 			setTimeout( function() {
 				window.location.replace("http://localhost:3000/login")
-			}, 4500);   
+			}, 3000);   
 
 		}
 	}, 'JSON');
@@ -139,19 +143,31 @@ $('.book').on('click', '.edit-book', function (e) {
 
  $('.edit-form').on('submit', function (e) {
 	e.preventDefault();
+	var me = this;
+	
+	console.log(this.action);
+	console.log(this);
+	console.log('ISBN: ', $(this).find('.edit-ISBN').val());
+	console.log('author: ', $(this).find('.edit-author').val());
+	console.log('title: ', $(this).find('.edit-title').val());
+	console.log('description: ', $(this).find('.edit-description').val());
+	console.log('amount: ', $(this).find('.edit-amount').val());
 	
 	$.ajax(this.action, {
 		method: 'PUT',
 		dataType: 'json',
 		data: {
-			'ISBN': $('.edit-ISBN').val(),
-			'author': $('.edit-author').val(),
-			'title': $('.edit-title').val(),
-			'description': $('.edit-description').val(),
-			'amount': $('.edit-amount').val()
+			'ISBN': $(this).find('.edit-ISBN').val(),
+			'author': $(this).find('.edit-author').val(),
+			'title': $(this).find('.edit-title').val(),
+			'description': $(this).find('.edit-description').val(),
+			'amount': $(this).find('.edit-amount').val()
 		},
 		complete: function (data) {
 			console.log(data);
+			console.log('complete this: ', me);
+			console.log($(me).parent().parent());
+			$(me).parent().parent().find('.title').text(data.responseJSON.title);
 		}
 	});
 	
@@ -192,15 +208,35 @@ $('.book').on('click', '.edit-book', function (e) {
  
  $('#users').on('click', '.delete-user', function (e) {
 	e.preventDefault();
-	
+	var me = this;
 	$.ajax(this.href, {
 		method: 'DELETE',
 		dataType: 'json',
 		context: document.activeElement,
 		complete: function () {
-			$(this).parent().remove();
+			$(me).parent().parent().remove();
 		}
 	}); 
+ });
+ 
+ $('.borrow').on('click', '.borrow-return', function (e) {
+	 e.preventDefault();
+	 
+	 var id = this.href.split('/')[6],
+	 	 me = this;
+	 
+	 console.log('id: ', id);
+	 
+	 $.ajax(this.href, {
+		method: 'DELETE',
+		dataType: 'json',
+		context: document.activeElement,
+		complete: function() {
+			console.log('deleted borrow');	
+			console.log($(me).parent());
+			$(me).parent().remove();
+		}
+	});
  });
  
  
@@ -227,10 +263,12 @@ $('.book').on('click', '.edit-book', function (e) {
  
  
  $('.delete-borrow').click(function (e) {
-	var me = this; 
+	var me = this,
+		id = this.href.split('/')[6]; 
 	e.preventDefault();
 	console.log(this, this.href);
-
+	console.log('id: ', id);
+		
 
 	$.ajax(this.href, {
 		method: 'DELETE',
@@ -238,8 +276,9 @@ $('.book').on('click', '.edit-book', function (e) {
 		context: document.activeElement,
 		complete: function() {
 			console.log('deleted borrow');	
+			console.log($(me).parent().find('#'+id));
 			
-			$(me).parent().find($('#return-book')).show();
+			$(me).parent().find('.return-book').show();
 			setTimeout( function () {
 				$(me).parent().remove();	
 			}, 3000);
@@ -270,5 +309,19 @@ $('.book').on('click', '.edit-book', function (e) {
  });
  
  $('#home-menu').click(function (e) {
+	 e.preventDefault();
+ });
+ 
+ $('#user-menu').mouseover(function () {
+	$('#user-logout').show(); 
+	$('#user-admin').show(); 
+ });
+
+ $('#myborrows-head').mouseleave(function () {
+	 $('#user-logout').hide();
+	 $('#user-admin').hide();
+ });
+ 
+ $('#user-menu').click(function (e) {
 	 e.preventDefault();
  });

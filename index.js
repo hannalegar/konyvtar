@@ -336,7 +336,8 @@ app.get('/user/borrows', function (req, res) {
 		} else {
 			console.log(borrows);
 			res.render('userborrows', {
-				book: borrows
+				book: borrows,
+				user: req.user
 			});
 		}
 	});

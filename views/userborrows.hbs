@@ -1,5 +1,10 @@
 <header id="myborrows-head">
 	<a href="/">Home</a>
+	<a href="/user/borrows" id="user-menu">Menu</a>
+	<a href="/logout" id="user-logout">Logout</a>
+	{{#if user.isAdmin}}
+		<a href="/admin" id="user-admin">Admin</a>
+	{{/if}}
 </header>
 <h1>My Books</h1>
 <div id="userborrows-books">
@@ -11,7 +16,7 @@
 			</a>
 			<p>{{author}}</p>
 			<a href="/books/{{book_id}}/borrows/{{_id}}" class="delete-borrow">Return</a>
-			<p id="return-book" style="display: none">Thank you for returning the {{title}}</p>
+			<p class="return-book" style="display: none" id="{{_id}}">Thank you for returning the {{title}}</p>
 			<p class="borrow-clear"></p>
 		</div>
 	{{else}}
