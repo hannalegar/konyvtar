@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<canvas id="canvas" width="1000" height="500" style="border: 1px solid red; margin: 20px; display: none;"></canvas> <br>
+		<div id="input">
+			<p>Left player: </p><input type="text" id="left-name">
+			<p>Right player: </p><input type="text" id="right-name">
+			<input type="submit" value="Submit" id="submit">
+		</div>
+		<div id="player" style="display: none;">
+			<p id="leftplayer"></p>
+			<p id="left"></p>
+			<p id="rightplayer"></p>
+			<p id="right"></p>
+		</div>
+		<p id="winner"></p>
+		<button style="display: none" id="again">Play again</button>
+		<button id="play">Play!</button>
+		<button id="new-game" style="display: none;">New Game</button>
+		
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>	
+	<script>
+		$(document.body).on('click', '#submit', function (e) {
+			$('#leftplayer').text($('#left-name').val());
+			$('#rightplayer').text($('#right-name').val());
+		});
+		
+		$(document.body).on('click', '#play', function () {
+			window.requestAnimationFrame(step);
+			$('#play').hide();
+			$('#canvas').show();	
+			$('#input').hide();
+			$('#player').show();		
+		});
+		
+		var c = document.getElementById("canvas");
+		var ctx = c.getContext("2d");
+			
+		var s = false,
+			draw = false,
+			a = 8,
+			b = 5,
+			x = 500,
+			y = 250,
+			a2 = 5,
+			b2 = 8,
+			x2 = 500,
+			y2 = 250,
+			leftgoals = 0,
+			rightgoals = 0,
+			rand;	
+		
+		function step(timestamp) {		
+			c.width = c.width;
+			x = x + a;
+			y = y + b;
+			x2 = x2 + a2;
+			y2 = y2 + b2;
+			rand = Math.floor((Math.random() * 1000000) + 1);
+			
+			console.log(timestamp);
+			
+			ctx.fillStyle = "#000000";
+			ctx.fillRect(0,0,1000,500);
+			
+			ctx.fillStyle = "#FFFFFF";
+			ctx.fillRect(0,left,30,60);
+			
+			ctx.fillStyle = "#FFFFFF";
+			ctx.fillRect(970,right,30,60);
+			
+			ctx.beginPath();
+			ctx.arc(x,y,15,0,2*Math.PI);
+			ctx.strokeStyle = 'white';
+			ctx.fillStyle = 'white';
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+			
+			ctx.beginPath();
+			ctx.arc(0,250,160,0,2*Math.PI);
+			ctx.strokeStyle = 'white';
+			ctx.stroke();
+			ctx.closePath();
+			
+			ctx.beginPath();
+			ctx.arc(1000,250,160,0,2*Math.PI);
+			ctx.strokeStyle = 'white';
+			ctx.stroke();
+			ctx.closePath();				
+							
+			ctx.beginPath();
+			ctx.moveTo(500, 0);
+			ctx.lineTo(500, 500);
+			ctx.lineWidth = 1;
+			ctx.strokeStyle = 'white';
+			ctx.lineCap = 'butt';
+			ctx.stroke();	
+			ctx.closePath();
+			
+			ctx.beginPath();
+			ctx.arc(500,250,50,0,2*Math.PI);
+			ctx.strokeStyle = 'white';
+			ctx.stroke();
+			ctx.closePath();
+			
+			ctx.beginPath();
+			ctx.arc(500,250,3,0,2*Math.PI);
+			ctx.strokeStyle = 'white';
+			ctx.fillStyle = 'white';
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
+									
+			if(x <= 985) {
+				s = true;
+				if(x <= 15){
+					a *= -1;
+				}				
+			} else {				
+				a *= -1;
+				s = true;
+			}
+			if(y <= 485) {
+				s = true;
+				if(y <= 15){
+					b *= -1;
+				}				
+			} else {				
+				b *= -1;
+				s = true;
+			}
+			if(left <= 0){
+				left = 0;
+			} 
+			if(left >= 440){
+				left = 440;
+			}
+			if(right <= 0){
+				right = 0;
+			} 
+			if(right >= 440){
+				right = 440;
+			}
+						
+			var i;
+			for (i = 0; i <= 100; i++) {
+				var u, v, angle, p1, p2;
+				angle = 2*Math.PI/100*i;
+				u = Math.cos(angle) * 15;
+				v = Math.sin(angle) * 15;
+				
+				p1 = x + u;
+				p2 = y + v;
+				
+				if(25 < p1 && p1 <= 30 && p2 >= left && p2 <= left + 5) {
+					a*= -1;
+					b*= -1;
+					
+					break;
+				}
+				
+				if(25 < p1 && p1 <= 30 && p2 >= left + 55 && p2 <= left + 60) {
+					a*= -1;
+					b*= -1;
+					
+					break;
+				}
+				
+				if(0 < p1 && p1 <= 30 && p2 >= left && p2 <= left + 60) {
+					a*= -1;
+					
+					if (45 >= x && y < left) {
+						b*= -1;
+						a*= -1;
+					} else if (45 >= x && y > left + 60) {
+						b*= -1;
+						a*= -1;
+					}
+					
+					break;
+				}
+ 			}
+
+			for (i = 0; i <= 100; i++) {
+				var u, v, angle, p1, p2;
+				angle = 2*Math.PI/100*i;
+				u = Math.cos(angle) * 15;
+				v = Math.sin(angle) * 15;
+				
+				p1 = x + u;
+				p2 = y + v;
+				
+				if(970 < p1 && p1 <= 975 && p2 >= right && p2 <= right + 5) {
+					a*= -1;
+					b*= -1;
+					
+					break;
+				}
+				
+				if(970 < p1 && p1 <= 975 && p2 >= right + 55 && p2 <= right + 60) {
+					a*= -1;
+					b*= -1;
+					
+					break;
+				}
+				
+				if(970 < p1 && p1 <= 1000 && p2 >= right && p2 <= right + 60) {
+					a*= -1;
+					if (955 >= x && y < right) {
+						b*= -1;
+						a*= -1;
+					} else if (955 >= x && y > right + 60) {
+						b*= -1;
+						a*= -1;
+					}
+					
+					break;
+				}
+ 			}
+			 
+			if(rand >= timestamp && rand <= timestamp + 5000){
+				draw = true;
+			}
+			if (draw) {
+				ctx.beginPath();
+				ctx.arc(x2,y2,15,0,2*Math.PI);
+				ctx.strokeStyle = '#AAAAAA';
+				ctx.fillStyle = '#AAAAAA';
+				ctx.fill();
+				ctx.stroke();
+				ctx.closePath();
+			} 
+			 
+			 
+			 
+			 
+			$('#left').text(leftgoals);
+			$('#right').text(rightgoals);
+			
+			if (x <= 15 && y >= 90 && y <= 410) {
+				rightgoals++;
+				$('#right').text(rightgoals);
+				if( rightgoals == 10) {
+					s = false;
+					$('#winner').text($('#right-name').val()+' won the game!').show();
+					$('#again').show();
+					$('#new-game').show();
+				}
+			}
+			
+			if (x >= 985 && y >= 90 && y <= 410) {
+				leftgoals++;
+				$('#left').text(leftgoals);
+				if (leftgoals == 10) {
+					s = false;
+					$('#winner').text($('#left-name').val()+' won the game!').show();
+					$('#again').show();
+					$('#new-game').show();
+				}
+			}			
+			
+			$(document.body).on('click', '#again', function (e) {
+				y = 250,
+				x = 500,
+				leftgoals = 0,
+				rightgoals = 0;
+				s = true;
+				$('#again').hide();
+				$('#winner').hide();
+				$('#new-game').hide();
+			});
+			
+			if(s) {
+				window.requestAnimationFrame(step);		
+			}
+		}
+		
+		
+		var left = 0;
+		$(document.body).keydown(function (e) {
+			if(e.keyCode == 40) {
+			//	console.log(e);
+				left += 30;	
+			}
+			if(e.keyCode == 38) {
+			//	console.log(e);
+				left -= 30;	
+			}			
+			
+		});
+		
+		var right = 0;
+		$(document.body).keydown(function (e) {
+			if(e.keyCode == 83){
+				right += 30;
+			}
+			if(e.keyCode == 87){
+				right += -30;
+			}
+		});
+		
+		$(document.body).on('click', '#again', function (e) {
+				//console.log(e);
+				y = 200,
+				x = 100,
+				leftgoals = 0,
+				rightgoals = 0;
+				window.requestAnimationFrame(step);
+		});
+		
+		$(document.body).on('click', '#new-game', function () {
+			location.reload();
+		});
+	</script>
+	</body>	
+</html>
